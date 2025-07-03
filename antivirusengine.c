@@ -10,7 +10,6 @@
 
 #define BUFFER_SIZE 512
 
-
 int scanCallBack(YR_SCAN_CONTEXT* context, int message, void* messageData, void* userData) {
     switch(message) {
         case CALLBACK_MSG_RULE_MATCHING:
@@ -35,7 +34,7 @@ int scanCallBack(YR_SCAN_CONTEXT* context, int message, void* messageData, void*
     return CALLBACK_CONTINUE;
 }
 
-void scanFile(const char* filePath, YR_RULES* rules) {
+void scanFile(const char* filePath, YR_RULES* rules) { 
     yr_rules_scan_file(rules, filePath, SCAN_FLAGS_REPORT_RULES_NOT_MATCHING, scanCallBack, NULL, NULL);
 }
 
@@ -87,7 +86,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    const char directoryPath[] = "path to rules";
+    const char directoryPath[] = "E:/MyProjects/CyberSecurity/antivirus-software-development/yara-rules";
 
     char* filePath = argv[1];
 
