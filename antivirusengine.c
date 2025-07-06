@@ -6,7 +6,6 @@
 #include <sys/stat.h>
 
 #include <yara.h>
-#include <windows.h>
 
 #define BUFFER_SIZE 512
 
@@ -35,7 +34,7 @@ int scanCallBack(YR_SCAN_CONTEXT* context, int message, void* messageData, void*
 }
 
 void scanFile(const char* filePath, YR_RULES* rules) { 
-    yr_rules_scan_file(rules, filePath, SCAN_FLAGS_REPORT_RULES_NOT_MATCHING, scanCallBack, NULL, NULL);
+    yr_rules_scan_file(rules, filePath, SCAN_FLAGS_REPORT_RULES_NOT_MATCHING, scanCallBack, NULL, 0);
 }
 
 void scanDirectory(const char* directoryPath, YR_RULES* rules) {
@@ -59,12 +58,12 @@ void scanDirectory(const char* directoryPath, YR_RULES* rules) {
             scanDirectory(path, rules);
         } else {
             snprintf(path, BUFFER_SIZE, "%s/%s", directoryPath, entry->d_name);
-            scanfFile(path, rules);
+            scanFile(path, rules);
         }
     }
 }
 
-void checkType(const char* path, const char* rules) {
+void checkType(const char* path, YR_RULES* rules) {
     struct stat pathStat;
 
     if(stat(path, &pathStat) == 0) {
@@ -86,7 +85,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    const char directoryPath[] = "E:/MyProjects/CyberSecurity/antivirus-software-development/yara-rules";
+    const char directoryPath[] = "/home/retiantonio/CyberSecurity/antivirus-software-development/yara-rules";
 
     char* filePath = argv[1];
 
@@ -124,8 +123,9 @@ int main(int argc, char* argv[]) {
             if(addResult > 0) {
                 printf("[ERROR] Failed to compile YARA rule %s, number of errors found: %d\n", ruleFilePath, addResult);
             } else {
-                printf("[SUCCESS] Compiled rule: %s", ruleFilePath);
+                printf("[SUCCESS] Compiled rule: %s\n", ruleFilePath);
             }
+            
             fclose(ruleFile);
         }
     }
