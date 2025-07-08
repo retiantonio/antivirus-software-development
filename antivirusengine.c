@@ -9,16 +9,21 @@
 
 #define BUFFER_SIZE 512
 
+int matchedCount = 0;
+int notMatchedCount = 0;
+
 int scanCallBack(YR_SCAN_CONTEXT* context, int message, void* messageData, void* userData) {
     switch(message) {
         case CALLBACK_MSG_RULE_MATCHING:
-            printf("Matched rule: %s\n", ((YR_RULE*)messageData)->identifier);
+            printf("[SCANNING] Matched rule: %s\n", ((YR_RULE*)messageData)->identifier);
+            matchedCount++;
             break;
         case CALLBACK_MSG_RULE_NOT_MATCHING:
-            printf("Did not match rule: %s\n", ((YR_RULE*)messageData)->identifier);
+            printf("[SCANNING] Did not match rule: %s\n", ((YR_RULE*)messageData)->identifier);
+            notMatchedCount++;
             break;
         case CALLBACK_MSG_SCAN_FINISHED:
-            printf("Scan finished\n");
+            printf("\n[RESULT] Scan finished\n");
             break;
         case CALLBACK_MSG_TOO_MANY_MATCHES:
             printf("Too many matches\n");
@@ -34,7 +39,7 @@ int scanCallBack(YR_SCAN_CONTEXT* context, int message, void* messageData, void*
 }
 
 void scanFile(const char* filePath, YR_RULES* rules) { 
-    yr_rules_scan_file(rules, filePath, SCAN_FLAGS_REPORT_RULES_NOT_MATCHING, scanCallBack, NULL, 0);
+    yr_rules_scan_file(rules, filePath, SCAN_FLAGS_REPORT_RULES_NOT_MATCHING | SCAN_FLAGS_REPORT_RULES_MATCHING, scanCallBack, NULL, 0);
 }
 
 void scanDirectory(const char* directoryPath, YR_RULES* rules) {
@@ -136,6 +141,15 @@ int main(int argc, char* argv[]) {
     yr_compiler_get_rules(yaraCompiler, &rules);
 
     checkType(filePath, rules);
+
+    printf("[RESULT] Rules Not Matched: %d\n", notMatchedCount);
+    printf("[RESULT] Rules Matched: %d\n", matchedCount);
+
+    if(matchedCount == 0) {
+        printf("[RESULT] Engine didn't detect any possible malware\n");
+    } else {
+        printf("[RESULT] Detections: %d | File may be dangerous to your computer\n", matchedCount);
+    }
 
     yr_rules_destroy(rules);
     yr_finalize();

@@ -1,0 +1,3 @@
+rule myTestRule {
+    condition: true
+}
