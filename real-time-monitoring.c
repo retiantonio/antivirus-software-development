@@ -64,6 +64,7 @@ void* monitorFunction(void* args) {
             struct inotify_event* event = (struct inotify_event*) &buffer[i];
 
             if(event->len) {
+                printf("Detected file name: %s\n", event->name);
                 char fullPath[512];
                 snprintf(fullPath, 512, "%s/%s", path, event->name);
                 callAntivirusEngine(fullPath);
@@ -81,9 +82,17 @@ void* monitorFunction(void* args) {
 
 int main(int argc, char* argv[]) {
     
+    if(argc != 2) {
+        printf("[ERROR] Wrong parameters input\n");
+        return 1;
+    }
+
     char* argument = argv[1];
+    printf("argument: %s\n", argument);
+
     char* argumentCopy = (char*) malloc(strlen(argument) + 1);
     memcpy(argumentCopy, argument, strlen(argument) + 1);
+    printf("argument copy: %s\n", argumentCopy);
 
     int tokenCounter = 0;
     char* token = strtok(argument, ";");    
@@ -97,7 +106,7 @@ int main(int argc, char* argv[]) {
     token = strtok(argumentCopy, ";");
     while(token != NULL) {
         //thread creation
-       
+        printf("function token: %s\n", token);
         if(pthread_create(&tid[threadCounter], NULL, monitorFunction, token) != 0) {
             printf("[ERROR] Cannot create thread\n");
             return 1;
