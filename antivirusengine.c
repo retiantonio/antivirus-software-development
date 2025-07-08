@@ -84,6 +84,17 @@ void checkType(const char* path, YR_RULES* rules) {
     }
 }
 
+void printResult() {
+    printf("[RESULT] Rules Not Matched: %d\n", notMatchedCount);
+    printf("[RESULT] Rules Matched: %d\n", matchedCount);
+
+    if(matchedCount == 0) {
+        printf("[RESULT] Engine didn't detect any possible malware\n");
+    } else {
+        printf("[RESULT] Detections: %d | File may be dangerous to your computer\n", matchedCount);
+    }
+}
+
 int main(int argc, char* argv[]) {
     if(argc != 2) {
         printf("[ERROR] Incorrect parameter number\n");
@@ -142,14 +153,7 @@ int main(int argc, char* argv[]) {
 
     checkType(filePath, rules);
 
-    printf("[RESULT] Rules Not Matched: %d\n", notMatchedCount);
-    printf("[RESULT] Rules Matched: %d\n", matchedCount);
-
-    if(matchedCount == 0) {
-        printf("[RESULT] Engine didn't detect any possible malware\n");
-    } else {
-        printf("[RESULT] Detections: %d | File may be dangerous to your computer\n", matchedCount);
-    }
+    printResult();
 
     yr_rules_destroy(rules);
     yr_finalize();
