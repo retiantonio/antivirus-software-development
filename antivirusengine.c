@@ -4,10 +4,14 @@
 
 #include <dirent.h>
 #include <sys/stat.h>
+#include <unistd.h>
+
+#include <fcntl.h>
 
 #include <yara.h>
 
 #define BUFFER_SIZE 512
+#define QUARANTINE_PATH "/home/retiantonio/CyberSecurity/QUARANTINE_TEST"
 
 int matchedCount = 0;
 int notMatchedCount = 0;
@@ -84,7 +88,58 @@ void checkType(const char* path, YR_RULES* rules) {
     }
 }
 
-void printResult() {
+void moveToQuarantine(char* filePath) {
+    //copy the file and move it to quarantine folder
+    int sourceFileDescriptor = open(filePath, O_RDONLY);
+    if(sourceFileDescriptor < 0) {
+        printf("[ERROR] Could not open given file\n");
+        return;
+    }
+
+    //get the name of the file
+    char* fileName = strrchr(filePath, '/');
+    if(fileName) {
+        fileName++;
+    } else {
+        printf("[ERROR] Invalid file path\n");
+        return;
+    }
+
+    //form the path for the destination
+    char destinationPath[BUFFER_SIZE] = {0};
+    snprintf(destinationPath, BUFFER_SIZE, "%s/%s", QUARANTINE_PATH, fileName);
+
+    int destinationFileDescriptor = open(destinationPath, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if(destinationFileDescriptor < 0) {
+        printf("[Error] Could not create quarantine file\n");
+        return;
+    }
+
+    char buffer[BUFFER_SIZE];
+    int bytes;
+    while((bytes = read(sourceFileDescriptor, buffer, BUFFER_SIZE)) > 0) {
+        if(write(destinationFileDescriptor, buffer, bytes) != bytes) {
+            printf("[ERROR] file write\n");
+            close(sourceFileDescriptor);
+            close(destinationFileDescriptor);
+            return;
+        }
+    }
+
+    close(sourceFileDescriptor);
+    close(destinationFileDescriptor);
+
+    if(bytes < 0) {
+        printf("[ERROR] file read\n");
+        return;
+    }
+   
+    if(unlink(filePath) != 0) {
+        printf("[ERROR] file unlink\n");
+    }
+}
+
+void printResult(char* filePath) {
     printf("[RESULT] Rules Not Matched: %d\n", notMatchedCount);
     printf("[RESULT] Rules Matched: %d\n", matchedCount);
 
@@ -152,8 +207,12 @@ int main(int argc, char* argv[]) {
     yr_compiler_get_rules(yaraCompiler, &rules);
 
     checkType(filePath, rules);
+    printResult(filePath);
 
-    printResult();
+    // if(matchedCount > 0) {
+    //     //move file to quarantine
+    //     moveToQuarantine(filePath);
+    // }
 
     yr_rules_destroy(rules);
     yr_finalize();

@@ -120,5 +120,6 @@ int main(int argc, char* argv[]) {
         pthread_join(tid[i], NULL);
     }
 
+    free(argumentCopy);
     return 0;
 }
