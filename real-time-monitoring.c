@@ -46,7 +46,7 @@ void* monitorFunction(void* args) {
     }    
 
     int watchDescriptor = -1;
-    if((watchDescriptor = inotify_add_watch(monitoringDescriptor, path, IN_CREATE | IN_MODIFY)) < 0) {
+    if((watchDescriptor = inotify_add_watch(monitoringDescriptor, path, IN_CREATE)) < 0) {
         printf("[ERROR] Could not start inotify watch\n");
         return NULL;
     }

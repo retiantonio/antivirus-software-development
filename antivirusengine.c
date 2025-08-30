@@ -209,10 +209,12 @@ int main(int argc, char* argv[]) {
     checkType(filePath, rules);
     printResult(filePath);
 
-    // if(matchedCount > 0) {
-    //     //move file to quarantine
-    //     moveToQuarantine(filePath);
-    // }
+    if(matchedCount > 0) {
+        //move file to quarantine
+        printf("[IN PROGRESS] Moving File\n");
+        moveToQuarantine(filePath);
+        printf("[SUCCESS] Moved File to Quarantine\n");
+    }
 
     yr_rules_destroy(rules);
     yr_finalize();
