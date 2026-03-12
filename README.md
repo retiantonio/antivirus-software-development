@@ -101,7 +101,7 @@ gcc ./real-time-monitoring.c -lpthread -o real-time-monitoring-executable
 
 [RESULT] Scan finished
 [RESULT] Rules Not Matched: 2277
-[RESULT] Rules Matched: 1 #myTestRule.yar always matches - rule for testing
+[RESULT] Rules Matched: 1 # myTestRule.yar always matches - rule for testing
 [RESULT] Detections: 1 | File may be dangerous to your computer
 [IN PROGRESS] Moving File
 [SUCCESS] Moved File to Quarantine
