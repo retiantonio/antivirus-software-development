@@ -91,6 +91,20 @@ gcc ./real-time-monitoring.c -lpthread -o real-time-monitoring-executable
 ./real-time-monitoring-executable "/home/user/Downloads/;/home/user/Music/"
 
 # 4. Output when adding or updating a file in the given directories
+    ....
+[SCANNING] Did not match rule: APT9002Code
+[SCANNING] Did not match rule: APT9002Strings
+[SCANNING] Did not match rule: APT9002
+[SCANNING] Did not match rule: FE_APT_9002
+[SCANNING] Did not match rule: PolishBankRAT_srservice_xorloop
+[SCANNING] Did not match rule: PolishBankRAT_fdsvc_xor_loop
+
+[RESULT] Scan finished
+[RESULT] Rules Not Matched: 2277
+[RESULT] Rules Matched: 1
+[RESULT] Detections: 1 | File may be dangerous to your computer
+[IN PROGRESS] Moving File
+[SUCCESS] Moved File to Quarantine
 </code></pre>
 
 
