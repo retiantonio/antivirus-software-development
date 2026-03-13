@@ -5,10 +5,10 @@
 </head>
 <body>
 
-<h1 align="center">🛡️ Sentinel-C: Linux Security Engine</h1>
+<h1 align="center">🛡️ Linux-Based Antivirus</h1>
 
 <p align="center">
-  <strong>Real-Time Malware Detection & Automated Quarantine Platform</strong><br>
+  <strong>Real-Time Malware Detection & Automated Quarantine Tool</strong><br>
   Built in C using libyara, inotify, and POSIX Multithreading
 </p>
 
