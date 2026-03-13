@@ -9,7 +9,7 @@
 
 <p align="center">
   <strong>Real-Time Malware Detection & Automated Quarantine Tool</strong><br>
-  Built in C using libyara, inotify, and POSIX Multithreading
+  Built in C using libyara, inotify, and POSIX
 </p>
 
 <p align="center">
