@@ -51,7 +51,7 @@
   <tr>
     <td><b>Real-Time Events</b></td>
     <td><code>inotify_add_watch</code></td>
-    <td>Instantaneous <code>IN_CREATE</code> event capture for live file monitoring.</td>
+    <td>Instantaneous <code>IN_CREATE</code> and <code>IN_MODIFY</code> event capture for live file monitoring.</td>
   </tr>
   <tr>
     <td><b>Process Isolation</b></td>
