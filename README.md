@@ -33,8 +33,8 @@
   <li><b>Custom Recursive Crawler:</b> Features a manual directory traversal engine using <code>opendir</code> and <code>readdir</code>, capable of deep-scanning entire file-tree structures recursively.</li>
   <li><b>Manual Quarantine Lifecycle:</b>
     <ul>
-      <li><b>Data Migration:</b> Implements a chunk-based copy loop using <code>open(2)</code> and <code>write(2)</code> to move threats to a secure zone without overloading system memory.</li>
-      <li><b>Atomic Neutralization:</b> Uses <code>unlink(2)</code> to remove the source file only after a successful quarantine copy is verified.</li>
+      <li><b>Data Migration:</b> Implements a chunk-based copy loop using <code>open()</code> and <code>write()</code> to move threats to a secure zone without overloading system memory.</li>
+      <li><b>Atomic Neutralization:</b> Uses <code>unlink()</code> to remove the source file only after a successful quarantine copy is verified.</li>
     </ul>
   </li>
   <li><b>Dynamic YARA Integration:</b> Dynamically crawls and compiles <code>.yar</code> rule files into binary signatures at runtime for high-speed pattern matching.</li>
