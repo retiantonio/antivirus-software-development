@@ -28,7 +28,7 @@
 
 <h3>🚀 Implementation Features</h3>
 <ul>
-  <li><b>Multithreaded Directory Watcher:</b> Utilizes <code>pthread</code> and <code>inotify_init</code> to monitor multiple directories concurrently. Each watch path is handled by a dedicated thread, ensuring zero latency between file creation and detection.</li>
+  <li><b>Multithreaded Directory Watcher:</b> Utilizes <code>pthread</code> and <code>inotify</code> to monitor multiple directories concurrently. Each watch path is handled by a dedicated thread, ensuring zero latency between file creation and detection.</li>
   <li><b>Isolated Scanning Engine:</b> Implements a <b>Fork-Exec model</b>. The monitor daemon spawns an independent child process for every scan using <code>fork()</code> and <code>execl()</code>, isolating the main daemon from the resource-heavy scanning logic.</li>
   <li><b>Custom Recursive Crawler:</b> Features a manual directory traversal engine using <code>opendir</code> and <code>readdir</code>, capable of deep-scanning entire file-tree structures recursively.</li>
   <li><b>Manual Quarantine Lifecycle:</b>
