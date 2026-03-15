@@ -60,12 +60,12 @@
   </tr>
   <tr>
     <td><b>Threat Mitigation</b></td>
-    <td><code>unlink(2)</code></td>
+    <td><code>unlink()</code></td>
     <td>Hard-removal of malicious file links from the user-accessible filesystem.</td>
   </tr>
   <tr>
     <td><b>File I/O</b></td>
-    <td><code>read</code> (512b Chunks)</td>
+    <td><code>read()</code> / <code>write()</code></td>
     <td>Optimized data streaming to handle large malware samples safely.</td>
   </tr>
   <tr>
